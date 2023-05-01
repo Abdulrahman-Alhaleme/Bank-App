@@ -1,13 +1,31 @@
 import { useState } from "react";
 import Cards from "./cards";
-import CardForm from "./Test";
+import CardForm from "./Cardform";
 
 
-export default function Form() {
+const Form = () => {
     const [userID, setUserId] = useState(1);
     const [username, setUserName] = useState("");
     const [userAccountNumper, setUserAccountNumper] = useState("");
     const [useraccountType, setUserAccountType] = useState("")
+    const [array, setArray] = useState([]);
+
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+    }
+
+
+    let cards = {
+        userID: userID,
+        username: username,
+        userAccountNumper: userAccountNumper,
+        useraccountType: useraccountType,
+    };
+
+    setArray([...array, cards])
+    setUserId(userID + 1);
 
     const handleChangeId = (event) => {
         const Id = event.target.value;
@@ -28,10 +46,7 @@ export default function Form() {
         setUserName(name)
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
 
-    }
 
     return (
         <>
@@ -42,7 +57,7 @@ export default function Form() {
                             type="text"
                             name="username"
                             value={username}
-                            onChange={handleChangeName}
+                            onChange={(e) => setUserName(e.target.value)}
                         />
                     </label>
                     <label>Enter your Account Numper:
@@ -50,7 +65,7 @@ export default function Form() {
                             type="number"
                             name="acountNumper"
                             value={userAccountNumper}
-                            onChange={handleChangeAge}
+                            onChange={(e) => setUserAccountNumper(e.target.value)}
                         />
                     </label>
                     <label>Enter your Account Numper:
@@ -58,7 +73,7 @@ export default function Form() {
                             type="number"
                             name="useraccountType"
                             value={useraccountType}
-                            onChange={handleChangeUserAccountType}
+                            onChange={(e) => setUserAccountType(e.target.value)}
                         />
                     </label>
                     <label className="IDD">
@@ -66,7 +81,7 @@ export default function Form() {
                             type="number"
                             name="userID"
                             value={userID}
-                            onChange={handleChangeId}
+                            onChange={(e) => setUserId(e.target.value)}
                         />
                     </label>
                     <button type="submit" onClick={() => setUserId(userID + 1)}>submit</button>
@@ -74,26 +89,33 @@ export default function Form() {
                 </form>
             </section >
 
-            {/* <section className="container">
-                <div className="card">
-                    <ul>
-                        <li>{userID}</li>
-                        <li>{username}</li>
-                        <li>{userAccountNumper}</li>
-                        <li>{useraccountType}</li>
+            <section className="container">
+                {array.map((account) => {
+                    return (
+                        <div className="card">
+                            <ul>
+                                <li>{userID}</li>
+                                <li>{account.username}</li>
+                                <li>{account.userAccountNumper}</li>
+                                <li>{account.useraccountType}</li>
+                                <button id={userID}>delete</button>
 
-                    </ul>
+                            </ul>
 
-                </div>
+                        </div>
+                    )
 
+                })}
             </section>
             <section className="container">
                 <Cards id={userID} name={username} userAccountNumber={userAccountNumper} userAccountType={useraccountType} />
-            </section> */}
+            </section>
             <section className="container">
                 <CardForm />
             </section>
+
         </>
 
     )
 }
+export default Form
